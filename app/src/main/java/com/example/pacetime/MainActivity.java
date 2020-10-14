@@ -110,6 +110,12 @@ public class MainActivity extends AppCompatActivity {
         int min = Integer.parseInt(min_str);
         int sec = Integer.parseInt(sec_str);
 
+        if (sec > 59)
+        {
+            showToast("Seconds cannot exceed 59");
+            return false;
+        }
+
         time_in_sec = min * 60 + sec;
 
         if (time_in_sec == 0)
@@ -119,6 +125,10 @@ public class MainActivity extends AppCompatActivity {
         }
         else
         {
+            if (min > 20)
+            {
+                Toast.makeText(MainActivity.this, "Seriously? Are you a sloth?", Toast.LENGTH_LONG).show();
+            }
             return true;
         }
     }
