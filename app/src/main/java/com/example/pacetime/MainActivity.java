@@ -1,8 +1,12 @@
 package com.example.pacetime;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView textview_time_output;
 
     private int time_in_sec;
-    private static final double pvsc_const = 2.917;
+    private static final double pvsc_const = 2.80;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +45,22 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    // Add info icon on top-left of the activity
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.info, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.action_info)
+            startActivity(new Intent(MainActivity.this, InfoActivity.class));
+        return super.onOptionsItemSelected(item);
+    }
+
     private void display_output_time(String output_time)
     {
         textview_time_output.setText(output_time);
@@ -54,10 +74,9 @@ public class MainActivity extends AppCompatActivity {
     private void perform_conversion()
     {
         double time_output_sec = time_in_sec / pvsc_const;
-        time_output_sec = Math.ceil(time_output_sec);
+        time_output_sec = Math.floor(time_output_sec);
 
         int time_out_sec_int = (int) time_output_sec;
-
 
         String output_time = time_out_sec_int / 60 + ":";
 
